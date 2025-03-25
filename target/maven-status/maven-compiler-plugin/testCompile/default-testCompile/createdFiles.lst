@@ -1,2 +1,4 @@
 com\example\AppTest.class
+com\example\integration\IntegrationTest.class
+com\example\CarServiceE2ETest.class
 com\example\service\CarServiceTest.class
