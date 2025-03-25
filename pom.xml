@@ -29,14 +29,6 @@
       <version>5.7.1</version>
       <scope>test</scope>
     </dependency>
-
-    <!-- JaCoCo for Code Coverage -->
-    <dependency>
-      <groupId>org.jacoco</groupId>
-      <artifactId>org.jacoco.core</artifactId>
-      <version>0.8.7</version>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
 
   <build>
@@ -63,25 +55,6 @@
           <target>21</target>
         </configuration>
       </plugin>
-
-      <!-- JaCoCo Plugin to generate code coverage report -->
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.7</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>prepare-agent</goal>
-              <goal>report</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>target</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
     </plugins>
   </build>
 </project>
