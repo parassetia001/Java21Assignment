@@ -17,15 +17,20 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('SonarQube') { // Ensure Jenkins SonarQube integration is configured
-                    withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONARQUBE_TOKEN')]) {
-                        sh "mvn clean verify sonar:sonar -Dsonar.projectKey=Java21Assignment -Dsonar.host.url=$SONARQUBE_URL -Dsonar.login=$SONARQUBE_TOKEN"
-                    }
-                }
+stage('SonarQube Analysis') {
+    steps {
+        withSonarQubeEnv('SonarQube') { // Use your SonarQube configuration name
+            withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONARQUBE_TOKEN')]) {
+                sh '''
+                    mvn clean verify sonar:sonar \
+                        -Dsonar.projectKey=Java21Assignment \
+                        -Dsonar.host.url=${SONAR_HOST_URL} \
+                        -Dsonar.login=${SONARQUBE_TOKEN}
+                '''
             }
         }
+    }
+}
 
         stage('Quality Gate Check') {
             steps {

@@ -8,7 +8,7 @@ WORKDIR /app
 COPY target/Java21Assignment-1.0-SNAPSHOT.jar app.jar
 
 # Expose application port
-EXPOSE 8080
+EXPOSE 8081
 
 # Run the application
 ENTRYPOINT ["java", "-jar", "app.jar"]
