@@ -10,7 +10,7 @@ pipeline {
     }
 
     stages {
-	//Uncomments and configure if you want to clone from GitHub
+	//Uncomment and configure if you want to clone from GitHub
         // stage('Clone Repository') {
         //     steps {
         //         script {
