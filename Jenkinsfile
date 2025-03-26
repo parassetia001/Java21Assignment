@@ -10,7 +10,7 @@ pipeline {
     }
 
     stages {
-        //Uncomment and configure if you want to clone from GitHub
+	//Uncomment and configure if you want to clone from GitHub
         // stage('Clone Repository') {
         //     steps {
         //         script {
@@ -18,6 +18,13 @@ pipeline {
         //         }
         //     }
         // }
+        
+        stage('Build with Maven') {
+            steps {
+                // Build the project and skip tests initially
+                sh 'mvn clean package -DskipTests'
+            }
+        }        
 
         stage('SonarQube Analysis') {
             steps {
@@ -47,21 +54,27 @@ pipeline {
             }
         }
 
-        stage('Build with Maven') {
-            steps {
-                sh 'mvn clean package -DskipTests'
-            }
-        }
-
+        // Unit Tests Stage
         stage('Run Unit Tests') {
             steps {
+                // Run unit tests
                 sh 'mvn test'
             }
         }
 
-        stage('Build Docker Image') {
+        // Integration Tests Stage
+        stage('Run Integration Tests') {
             steps {
-                sh 'docker build -t $IMAGE_NAME .'
+                // Run integration tests (API, DB interactions)
+                sh 'mvn verify -DskipTests=false -Dtest=IntegrationTest'
+            }
+        }
+
+        // End-to-End Tests Stage
+        stage('Run E2E Tests') {
+            steps {
+                // Run E2E tests (UI or API flow)
+                sh 'mvn test -Dtest=com.example.CarServiceE2ETest'
             }
         }
 
@@ -74,6 +87,12 @@ pipeline {
                         sh "docker rm $CONTAINER_NAME"
                     }
                 }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t $IMAGE_NAME .'
             }
         }
 
